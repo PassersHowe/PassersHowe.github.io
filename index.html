@@ -239,70 +239,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！</p>
+              <p>　　 前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！</p>
 <h3 id="广播简述"><a href="#广播简述" class="headerlink" title="广播简述"></a>广播简述</h3><p>Android应用程序可以发送或者接收来自 Android 系统和其他 Android 应用程序的广播消息，类似于发布订阅设计模式。当感兴趣的事件发生时，这些广播被发送。例如，Android 系统在各种系统事件发生时发送广播，比如系统启动或者设备开始充电等。应用程序还可以发送自定义的广播，比如通知其他应用可能感兴趣的内容(例如，一些新数据已被下载)。</p>
-<p>应用程序可以注册接收特定的广播，当发送广播时，系统自动将广播路由到订阅该特定类型广播的应用程序。</p>
-<p>一般来说，广播可以用作跨应用程序和正常用户流之外的消息传递系统。</p>
-<h3 id="系统广播"><a href="#系统广播" class="headerlink" title="系统广播"></a>系统广播</h3><p>当发生各种系统事件时,系统会自动发送广播，例如系统切换飞行模式时，系统广播被发送到所有接收订阅事件的应用程序。</p>
-<p>广播消息本身被包裹在一个 Intent 对象的动作字符串标识（例如 android.intent.action.AIRPLANE_MODE ）。这个 Intent 还可以包括附加到其额外字段中的附加信息。比如，”飞行模式” 的 Intent 包括一个 boolean 额外指示是否 “飞行模式”。</p>
-<p>系统广播行为的完整列表，请参阅 Android SDK 中的 BROADCAST_ACTIONS.TXT 文件。每个广播行为都有与之关联的常量字段，例如常量 ACTION_AIRPLANE_MODE_CHANGED 的值为 android.intent.action.AIRPLANE_MODE，每个广播动作的文档都可以在其相关联的常量字段中获得。</p>
-<p>注：系统广播更改<br>Android 7 和更高的不再发送以下系统广播。这种优化影响所有的应用程序，不仅那些针对Android 7。</p>
-<ul>
-<li>ACTION_NEW_PICTURE</li>
-<li>ACTION_NEW_VIDEO<br>针对 Android 7 的应用程序（API级别24）和更高的必须登记以下的广播代码注册广播接收器（BroadcastReceiver ， IntentFilter）。在清单中声明接收器不起作用。</li>
-<li>CONNECTIVITY_ACTION</li>
-</ul>
-<h3 id="注册接收广播"><a href="#注册接收广播" class="headerlink" title="注册接收广播"></a>注册接收广播</h3><p>应用程序可以通过两种方式接收广播：通过清单声明的接收者和上下文注册的接收者</p>
-<ol>
-<li><p>清单声明的接收器(静态注册)</p>
-<p>在清单中声明广播接收者，可以通过下面的步骤：<br>(1)在应用程序的清单中指定 <receiver> 元素</receiver></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;receiver</div><div class="line">         android:name=".DemoBroadcastReceiver"</div><div class="line">         android:exported="true"&gt;</div><div class="line">       &lt;intent-filter&gt;</div><div class="line">           &lt;action android:name="android.intent.action.BOOT_COMPLETED"/&gt;</div><div class="line">           &lt;action android:name="android.intent.action.INPUT_METHOD_CHANGED"/&gt;</div><div class="line">       &lt;/intent-filter&gt;</div><div class="line">           </div><div class="line">&lt;/receiver&gt;</div></pre></td></tr></table></figure>
-<p>intent-filter (意图过滤器) 指定你的接收者订阅的广播操作。</p>
-<p>(2)继承 BroadcastReceiver 并实现 onReceive（Context，Intent） 方法，请看下面的示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoBroadcastReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</div><div class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"DemoBroadcastReceiver"</span>;</div><div class="line">     </div><div class="line">     <span class="meta">@Override</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">         StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">         sb.append(<span class="string">"Action: "</span> + intent.getAction() + <span class="string">"\n"</span>);</div><div class="line">         sb.append(<span class="string">"URI: "</span> + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + <span class="string">"\n"</span>);</div><div class="line">         String log = sb.toString();</div><div class="line">         Log.d(TAG, log);</div><div class="line">         Toast.makeText(context, log, Toast.LENGTH_LONG).show();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当应用程序安装时，系统包管理器注册接受器，然后接收器将成为你的应用程序的单独入口，这意味着如果应用程序当前未运行，系统可以启动你的应用程序并发送广播。</p>
-<p>系统将创建一个新的 BroadcastReceiver 组件对象来处理它接收的每个广播。这个对象仅对调用 onReceive（Context，Intent）的时候有效。当你在代码从该方法返回，系统将认为组件不再活动。</p>
-</li>
-<li><p>context 注册接收者(动态注册)  </p>
-</li>
-</ol>
-<pre><code>用context注册接收器，可以通过以下几个步骤：
-(1) 创建 BroadcastReceiver 并实例化。
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BroadcastReceiver broadcastReceiver = <span class="keyword">new</span> DemoBroadcastReceiver();</div></pre></td></tr></table></figure>
-
-(2) 创建一个 IntentFilter 并调用 registerReceiver( BroadcastReceiver , IntentFilter ) 来注册接收器。
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);</div><div class="line">intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);</div><div class="line"><span class="keyword">this</span>.registerReceiver(broadcastReceiver,intentFilter);</div></pre></td></tr></table></figure>
-
-注意：要注册本地广播，请改用 LocalBroadcastManager.registerReceiver( BroadcastReceiver , IntentFilter )。
-
-
-如果context注册有效时，context注册的接收者就可以接收广播。例如你在 Activity 的 context 中注册，只要 Activity 没有被销毁，就会收到广播。如果是使用 ApplicationContext 进行注册，只要程序在运行就可以收到广播。
-
-(3)停止接收广播时，可以调用 unregisterReceiver( android.content.BroadcastReceiver ) 进行注销。当你不需要这个广播时或者 context 不再有效时，一定要注销接收器。·
-
-注意你在哪里注册和注销的接收者，比如，你在 Activity 的 onCreate( Bundle ) 中注册一个接收者，则应该在 onDestory() 中注销它，防止接收器泄露；如果你在 onResume() 中注册一个接收器，你应该在 onPause() 中注销，以防止多次注册( 如果你不想在 Activity 暂停时接收广播，可以做减少不必要的系统开销 )。不要在 onSaveInstanceState( Bundle ) 中注销，如果用户在历史栈中移回，则不会调用这个方法。
-</code></pre><ol>
-<li><p>进程状态的影响</p>
-<p>BroadcastReceiver 的状态(无论是否在运行)会影响其包含进程的状态，这也可能反过来影响其被系统杀死的可能性。例如，当进程执行一个接收器时(在其 onReceive() 方法中运行代码)，它被认为是一个前台进程，除非内存压力极度大的时候，否则系统将保持其进程的运行。</p>
-<p>然而，一旦你的代码从 onREceive() 方法中返回, BroadcastReceiver 就不在活动了。接收器的宿主进程变得和运行在这个进程中的其它应用程序组件一样重要。如果该进程只承载一个 manifest-declared 接收器(应用程序从来没有或者最近没有跟用户进行交互)，然后从 onReceive() 返回时，系统将认为它的进程是一个低优先级的进程，很可能会杀死它，从而施放资源，用于其它优先级高的进程。</p>
-<p>因此，不应该在广播接收器中执行耗时的后台线程，在执行 onReceive() 后，系统随时可以杀死进程以回收内存，这样做会终止在该进程中运行生成的线程。为了避免这种情况的发生，应该调用 goAsync() 方法(如果你需要更多的时间来处理后台线程中的广播)或使用 JobScheduler 从接收器调度 JobService ，则系统会知道该进程继续执行工作。</p>
-<p>下面的这段代码显示了一个 BroadcastReceiver 使用 goAsync() 来标记，需要更多的时间来完成当前的操作，并在完成后再 onReceiver() 。如果你在 onReceive() 中需要的时间很长，导致 UI 线程错过了一帧( 16 ms )，可以使用上面的方法，在后台线程继续工作。</p>
-</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoBroadcastReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"DemoBroadcastReceiver"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, <span class="keyword">final</span> Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> PendingResult pendingResult = goAsync();</div><div class="line"></div><div class="line">        AsyncTask&lt;String, Integer, String&gt; asyncTask = <span class="keyword">new</span> AsyncTask&lt;String, Integer, String&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> String <span class="title">doInBackground</span><span class="params">(String... params)</span> </span>&#123;</div><div class="line">                StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">                sb.append(<span class="string">"Action: "</span> + intent.getAction() + <span class="string">"\n"</span>);</div><div class="line">                sb.append(<span class="string">"URI: "</span> + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + <span class="string">"\n"</span>);</div><div class="line">                String log = sb.toString();</div><div class="line">                Log.d(TAG, log);</div><div class="line"></div><div class="line">                <span class="comment">// 必须调用 finish() ，以便 BroadcastReceiver 可以被回收。</span></div><div class="line">                pendingResult.finish();</div><div class="line"></div><div class="line">                <span class="keyword">return</span> log;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        asyncTask.execute();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="发送广播"><a href="#发送广播" class="headerlink" title="发送广播"></a>发送广播</h3><p>Android 提供了三种方法供应用发送广播：</p>
-<ul>
-<li><p>sendOrderedBroadcast( Intent , String ) 方法将广播发送到一个接收器。随着每个接收器依次执行，它可以将结果传递到下一个接收器，也可以完全中止广播，使它不会传给其他接收器。Android 可以控制运行的命令接收器：匹配 intent-filter 的优先级属性；具备相同优先级的接收器，可以任意顺序运行。</p>
-</li>
-<li><p>sendBroadcast( Intent ) 方法向所有接收器发送未确定顺序的广播，这被成为普通广播。这种广播更有效率，但是意味着接收器不能读取来自其他接收器的结果，传播从广播接收的数据，或者中止广播。</p>
-</li>
-<li><p>LocalBroadcastManager.sendBroadcast 方法将广播发送到同个应用程序中的接收者。如果你不需要发送跨应用广播，请使用本地广播。实施效率更高(无需进行跨进程通信)，不需要担心其他可以接收或者发送广播的应用程序之间的任何安全问题。</p>
-</li>
-</ul>
-<p>下面的代码片段演示了如何通过创建 Intent 并 调用sendBroadcast( Intent ) 来发送广播：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.setAction(<span class="string">"com.passershowe.broadcast.NOTIFICATION_DEMO"</span>);</div><div class="line">intent.putExtra(<span class="string">"data"</span>,<span class="string">"Send a notice"</span>);</div><div class="line">sendBroadcast(intent);</div></pre></td></tr></table></figure>
-
+<p>应用程序可以注册接收特定的广播，当发送广播时，系统自动将广播路由到订阅该特定类型广播的应用程序。一般来说，广播可以用作跨应用程序和正常用户流之外的消息传递系统。</p>
+          
       
       
     </div>
@@ -316,6 +256,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a  href="/2017/04/05/Android-BroadcastReceiver/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
