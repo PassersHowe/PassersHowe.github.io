@@ -3,15 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Android-Service | PassersHowe</title>
+  <title>浅谈 Android Service | PassersHowe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="Android-Service">
+  <meta name="description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！
+Serviec(服务)简述
+什么是ServiceService 是一个可以在后台执行长时间运行操作而不提供用户界面的应用组件。Service 可以由其他应用组件启动，即便用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可以绑定到 Service ，进行交互，甚至执行进程间通信(IPC)。例如，Se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈 Android Service">
 <meta property="og:url" content="http://www.passershowe.com/2017/04/11/Android-Service/index.html">
 <meta property="og:site_name" content="PassersHowe">
-<meta property="og:updated_time" content="2017-04-11T05:08:57.520Z">
+<meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！
+Serviec(服务)简述
+什么是ServiceService 是一个可以在后台执行长时间运行操作而不提供用户界面的应用组件。Service 可以由其他应用组件启动，即便用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可以绑定到 Service ，进行交互，甚至执行进程间通信(IPC)。例如，Se">
+<meta property="og:updated_time" content="2017-04-12T16:25:37.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android-Service">
+<meta name="twitter:title" content="浅谈 Android Service">
+<meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！
+Serviec(服务)简述
+什么是ServiceService 是一个可以在后台执行长时间运行操作而不提供用户界面的应用组件。Service 可以由其他应用组件启动，即便用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可以绑定到 Service ，进行交互，甚至执行进程间通信(IPC)。例如，Se">
   
     <link rel="alternative" href="/atom.xml" title="PassersHowe" type="application/atom+xml">
   
@@ -213,7 +222,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android-Service
+      浅谈 Android Service
     </h1>
   
 
@@ -223,6 +232,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -230,7 +243,83 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！</p>
+<h3 id="Serviec-服务-简述"><a href="#Serviec-服务-简述" class="headerlink" title="Serviec(服务)简述"></a>Serviec(服务)简述</h3><ol>
+<li><p>什么是Service<br>Service 是一个可以在后台执行长时间运行操作而不提供用户界面的应用组件。Service 可以由其他应用组件启动，即便用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可以绑定到 Service ，进行交互，甚至执行进程间通信(IPC)。例如，Service 可以处理网络事务，播放音乐，执行文件读写或与内容提供程序交互，这一切都可以在后台进行。</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+</the></li>
+<li><p>服务的两种基本形式</p>
+<p> 启动</p>
+<pre><code>当应用组件(如 Activity )通过调用 startService() 启动服务时，服务处于 “启动” 状态，一旦启动，服务可以在后台无限期运行，即使启动服务的组件被销毁了也不受影响。已经启动的服务通常执行单一操作，而且不会讲结果返回给调用方。例如，它可能通过网络下载或者上传文件。操作完成后，服务会自动停止运行。
+</code></pre><p> 绑定</p>
+<pre><code>当应用组件通过调用 bindService() 绑定到服务时，服务处于绑定状态。绑定服务提供了一个客户端-服务器( client-serve )接口,允许组件与服务进行交互，发送请求，获取结果，甚至是利用进程间通信( IPC )跨进程执行这些操作。只有与另一个组件绑定时，绑定服务才会运行。多个组件可以绑定同个服务，但全部取消绑定后，该服务将会被销毁。
+</code></pre><p> 虽然服务的形式有两种，但服务可以同时以两种方式运行，也就是说，它既可以是启动服务(以无限期运行)，也允许绑定。问题在于你是否实现一组回调方法： onStartCommand() (允许组件启动服务) 和 onBind() (允许绑定服务)。</p>
+<p> 无论应用是否处于启动状态，绑定状态，或是处于启动并且绑定状态，任何应用组件均可以像使用 Activity 那样通过调用 Intent 来使用服务(即使服务来自另一个应用)。不过，你可以通过清单文件声明服务为私有服务，阻止其他应用访问。</p>
+<p> 注意：服务在其托管进程的主线程中运行，它不创建自己的线程，也不在单独的进程中运行(除非另行指定)。这意味着，如果服务将执行任何CPU密集型工作或者阻止性操作(例如 MP3 播放或联网)，则应在服务内创建新的线程来完成这项工作，通过使用单独的线程，可以降低发生ANR错误的风险，而应用的主线程仍可以继续专注于运行用户与 Activity 之间的交互。</p>
+</li>
+</ol>
+<h3 id="认识-Service"><a href="#认识-Service" class="headerlink" title="认识 Service"></a>认识 Service</h3><p>要创建服务，必须创建 Service 的子类(或者使用它的一个现有子类)。需要重写一些回调方法，以处理服务生命周期的有些关键方面，并提供一种机制将组件绑定到服务应重写的最重要的回调方法包括：</p>
+<ul>
+<li><p>onStartCommand()</p>
+<pre><code>当另一个组件(如 Activity )通过调用 startService() 请求启动服务时，系统将调用此方法。一旦执行此方法，服务会启动并可在后台无限期运行。如果你实现了此方法，在服务工作完成后，需要调用 stopSelf() 或 stopService() 来停止服务(如果只是提供绑定则无需实现此方法)
+</code></pre></li>
+<li><p>onBind()</p>
+<pre><code>当另一个组件调用 bindService() 与服务绑定时，系统将调用此方法。在此方法中必须返回 IBinder 提供一个接口，供客户端与服务器进行通信。如果不希望允许绑定，则可以返回 null 。
+</code></pre></li>
+<li><p>onCreate()</p>
+<pre><code>首次创建服务时，系统调用次方法来执行一次性程序(在调用 onStartCommand() 或 onBind() 之前)。如果服务已经运行则不会调用此方法。
+</code></pre></li>
+<li><p>onDestory()</p>
+<pre><code>当服务不再使用且将被销毁是，系统调用此方法。服务应该实现方法来清理所有资源，如线程、注册的监听器，接收器等。
+</code></pre></li>
+</ul>
+<p>如果组件调用 startService()启动服务(会导致对 onStartCommand() 的调用)，则服务将一直运行，知道服务使用 stopSelf() 自行停止运行或者其他组件调用 stopService() 停止它为止。</p>
+<p>如果组件调用 bindService() 来创建服务(且未调用 onStartCommand() )，则服务只会在该组件与其绑定时运行，一旦服务与所有客户端全部取消绑定时，系统会销毁它。</p>
+<p>仅当内存过低且系统必须回收资源供具有用户焦点的 Activity 使用时，Android 系统才会强制停止服务。如果将服务绑定到具有用户焦点的 Activity ，它被系统终止的可能性不大；如果将服务声明为在前台运行,则它几乎永远不会终止。如果服务已经启动且要长时间运行，则系统会随着时间推移降低服务在后台列表中的位置，服务也将变得容易被终止；如果服务是启动服务，则必须将其设计为能够妥善处理系统对它的重启。如果系统终止服务，那么一旦资源变得再次可用，系统便会重启服务(取决于从 onStartCommand() )返回的值。</p>
+<h3 id="使用清单声明服务"><a href="#使用清单声明服务" class="headerlink" title="使用清单声明服务"></a>使用清单声明服务</h3><p>如同 Activity (或是其他组件)一样，必须在应用的清单文件中声明所有服务。</p>
+<p>要声明服务，清添加 <service> 元素作为 <application> 元素的子元素。例如</application></service></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;manifest ... &gt;</div><div class="line">  ...</div><div class="line">  &lt;application ... &gt;</div><div class="line">      &lt;service android:name=".DemoService" /&gt;</div><div class="line">      ...</div><div class="line">  &lt;/application&gt;</div><div class="line">&lt;/manifest&gt;</div></pre></td></tr></table></figure>
+<p><service> 元素还可以包含其他属性，定义一些特性，如启动服务及运行所需要的权限。其中 android:name 属性是唯一必须的属性，用于指定服务的类名。应用一经发布，不可更改类名，不然会因依赖显示 Intent 启动或绑定服务而导致破坏代码的风险。</service></p>
+<p>为了确保应用的安全性，请使用显示 Intent 或 绑定 Service ， 而且不要为服务声明 Intent 过滤器。启动哪个服务存在不确定性，对这种不确定性的考量非常有必要，可以为服务提供 Intent 过滤器并从 Intent 中排除想应的组件名称，但必须使用 setPackage() 方法设置 Intent 的软件包, 这样做可以消除目标服务的不确定性。</p>
+<p>此外还可以通过添加 android:exporeted = “false” ，确保服务为应用私有，可以阻止其他应用启动你的服务，同理，使用显示 Intent 时也是如此。</p>
+<h3 id="启动服务的创建"><a href="#启动服务的创建" class="headerlink" title="启动服务的创建"></a>启动服务的创建</h3><p>启动服务由另一个组件通过调用 startService() 启动，服务的 onStartCommand() 方法也将被调用。</p>
+<p>服务启动之后，其生命周期完全独立，且可以在后台无限期地运行，即使启动服务的组件被销毁了，该服务也不受影响。如果要结束该服务，可以调用 stopSelf() 自行停止运行，或者由另一个组件调用 stopService() 来停止。</p>
+<p>应用组件(如 Activity )可以通过调用  startService() 方法且传递一个 Intent 对象(指定服务和其所有数据)来启动服务。服务通过 onStartCommand() 方法来接收 Intent 对象。</p>
+<p>例如，某个 Activity 需要保存一些数据到线上的数据库中，这时它可以启用一个协同服务，调用 startService() 并传递一个 Intent ，提供需要保存的数据。服务通过 onStartCommand() 接收 Intent ，连接到互联网并执行数据库事务，事务完成后，服务将自行停止运行且随即被销毁。</p>
+<p>注意： 默认情况下，服务与服务声明所在的应用处于同一进程，而且运行在主线程中。因此，如果是执行一些耗时操作，需要在服务内启动新的线程，避免影响应用的性能。</p>
+<p>你可以通过扩展两个类来创建启动服务：</p>
+<p>Service </p>
+<pre><code>这是适用于所有服务的基类。默认情况下该服务将在应用的主线程中运行，你需要创建一个新的线程供服务工作，避免影响正在运行的所有 Activity 的性能。
+</code></pre><p>IntentService<br>    这个是 Service 的子类，它适用工作线程逐一处理所有启动请求。如果不要求服务同时处理  请求，这毫无疑问是最好的选择。只需要实现 onHandleIntent() 方法即可。该方法会接收每个启动请求的 Intent ，使你能够执行后台工作。</p>
+<p>下面演示如何使用其中任意一个类来实现服务。</p>
+<ol>
+<li><p>扩展 IntentService 类</p>
+<p>由于大多数启动服务不用同时处理多个请求(这种多线程情况可能很危险),因此选择 IntentService 类实现服务无疑是最好的。</p>
+<p>IntentServic 执行以下的操作：</p>
+<pre><code>- 创建默认的工作线程，在主线程外执行传递给 onStartConmmand() 的所有 Intent。
+- 创建工作队列，将 Intent 逐一传递给 onHandleIntent() 实现,不用担心多线程问题。
+- 处理所有启动请求后停止服务(不用手动调用 stopSelf() 来结束服务)
+- 提供 onBind() 的默认实现(返回 null )。
+- 提供 onStartCommand() 的默认实现，可以将 Intent 依次发送到工作队列 和 onHandleIntent() 实现。
+</code></pre><p> 综上所述，只需要实现 onHandleIntent() 来完成客户端提供的工作即可。(需要为服务提供构造函数)</p>
+<p> 下面是 IntentService 的实现示例：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoIntentService</span> <span class="keyword">extends</span> <span class="title">IntentService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Creates an IntentService.  Invoked by your subclass's constructor.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> name Used to name the worker thread, important only for debugging.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DemoIntentService</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onHandleIntent</span><span class="params">(@Nullable Intent intent)</span> </span>&#123;</div><div class="line">        <span class="comment">//模拟耗时操作，线程沉睡3秒</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">3000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            Thread.currentThread().interrupt();</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>只需要一个构造函数和一个 onHandleIntent() 实现即可。</p>
+<p>如果重写其他回调方法(如 onCreate() 、onStartCommand() 或 onDestroy)，要确保调用超类实现，让 IntentService 能够妥善处理工作线程的生命周期。</p>
+<p>例如， onStartCommand() 必须返回默认实现(将 Intent 传递给 onHandleIntent() ):</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(@Nullable Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line">    Toast.makeText(<span class="keyword">this</span>, <span class="string">"service starting"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">    Log.i(TAG, <span class="string">"service starting"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除了 onHandleIntent() 之外 ，无需调用的方法就是 onBind() (仅当服务允许绑定时，才需要实现该方法)</p>
+</li>
+<li><p>扩展服务类</p>
+<p>如上部分所述，使用 IntentService 简化了启动服务的实现，如果要服务执行多线程(不是通过工作队列处理启动请求)，则可以扩展 Service 类来处理每个 Intent 。</p>
+<p>以下是 Service 类实现代码示例，该类执行的工作与上面的 IntentService 示例相同。对每个启动请求，它都使用工作线程执行作业，且每次仅处理一个请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Looper mServiceLooper;</div><div class="line">    <span class="keyword">private</span> ServiceHandle mServiceHandle;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//启动运行该服务的线程</span></div><div class="line">        HandlerThread thread = <span class="keyword">new</span> HandlerThread(<span class="string">"ServiceStartArguments"</span>, Process</div><div class="line">                .THREAD_PRIORITY_BACKGROUND);</div><div class="line">        thread.start();</div><div class="line"></div><div class="line">        <span class="comment">//获取HandlerThread的Looper并将其用于自己的Handler</span></div><div class="line">        mServiceLooper = thread.getLooper();</div><div class="line">        mServiceHandle = <span class="keyword">new</span> ServiceHandle(mServiceLooper);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"service starting"</span>, Toast.LENGTH_SHORT).show();</div><div class="line"></div><div class="line">        <span class="comment">//每一个启动请求，发送一个消息来启动一个工作并提交开始Id</span></div><div class="line">        Message msg = mServiceHandle.obtainMessage();</div><div class="line">        msg.arg1 = startId;</div><div class="line">        mServiceHandle.sendMessage(msg);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> START_STICKY;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"service done"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//从线程接收消息的处理程序</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceHandle</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ServiceHandle</span><span class="params">(Looper looper)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(looper);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">            <span class="comment">//模拟耗时操作,线程沉睡3秒</span></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                Thread.sleep(<span class="number">3000</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                Thread.currentThread().interrupt();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            stopSelf(msg.arg1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如上面的示例，与使用 IntentService 相比，这需显得复杂一些。</p>
+<p>但是，自己处理 onStartCommand() 的每个调用，因此可以同时执行多个请求。上面的示例没有实现。如果你有需要，可以为每个请求创建一个新线程，然后立即运行这些线程(不是等待上一个请求完成)。</p>
+</li>
+</ol>
+
       
       
         <div class="page-reward">
@@ -284,12 +373,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/11/Android-Service/">Android-Service</a></p>
+        <p><span>本文标题:</span><a href="/2017/04/11/Android-Service/">浅谈 Android Service</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月11日 - 13时08分</p>
-        <p><span>最后更新:</span>2017年04月11日 - 13时08分</p>
+        <p><span>最后更新:</span>2017年04月13日 - 00时25分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/11/Android-Service/" title="Android-Service">http://www.passershowe.com/2017/04/11/Android-Service/</a>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/11/Android-Service/" title="浅谈 Android Service">http://www.passershowe.com/2017/04/11/Android-Service/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/11/Android-Service/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
@@ -316,7 +405,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Serviec-服务-简述"><span class="toc-number">1.</span> <span class="toc-text">Serviec(服务)简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#认识-Service"><span class="toc-number">2.</span> <span class="toc-text">认识 Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用清单声明服务"><span class="toc-number">3.</span> <span class="toc-text">使用清单声明服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务的创建"><span class="toc-number">4.</span> <span class="toc-text">启动服务的创建</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -376,7 +465,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android-Service/">Android-Service</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Android-BroadcastReceiver/">浅谈Android Broadcast</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Android-Activity/">浅谈Android Activity的生命周期</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android-Service/">浅谈 Android Service</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Android-BroadcastReceiver/">浅谈Android Broadcast</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Android-Activity/">浅谈Android Activity的生命周期</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
