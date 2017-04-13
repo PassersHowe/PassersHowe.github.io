@@ -16,7 +16,7 @@ Serviec(服务)简述
 Serviec(服务)简述
 什么是ServiceService 是一个可以在后台执行长时间运行操作而不提供用户界面的应用组件。Service 可以由其他应用组件启动，即便用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可以绑定到 Service ，进行交互，甚至执行进程间通信(IPC)。例如，Se">
 <meta property="og:image" content="http://www.passershowe.com/img/service_lifecycle.png">
-<meta property="og:updated_time" content="2017-04-13T15:29:07.423Z">
+<meta property="og:updated_time" content="2017-04-13T15:51:59.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈 Android Service">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！
@@ -311,10 +311,8 @@ Serviec(服务)简述
 <p>如果重写其他回调方法(如 onCreate() 、onStartCommand() 或 onDestroy)，要确保调用超类实现，让 IntentService 能够妥善处理工作线程的生命周期。</p>
 <p>例如， onStartCommand() 必须返回默认实现(将 Intent 传递给 onHandleIntent() ):</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(@Nullable Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line">    Toast.makeText(<span class="keyword">this</span>, <span class="string">"service starting"</span>, Toast.LENGTH_SHORT).show();</div><div class="line">    Log.i(TAG, <span class="string">"service starting"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.onStartCommand(intent, flags, startId);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除了 onHandleIntent() 之外 ，无需调用的方法就是 onBind() (仅当服务允许绑定时，才需要实现该方法)</p>
 </li>
-</ol>
-<p> 除了 onHandleIntent() 之外 ，无需调用的方法就是 onBind() (仅当服务允许绑定时，才需要实现该方法)。</p>
-<ol>
 <li><p>扩展服务类</p>
 <p>如上部分所述，使用 IntentService 简化了启动服务的实现，如果要服务执行多线程(不是通过工作队列处理启动请求)，则可以扩展 Service 类来处理每个 Intent 。</p>
 <p>以下是 Service 类实现代码示例，该类执行的工作与上面的 IntentService 示例相同。对每个启动请求，它都使用工作线程执行作业，且每次仅处理一个请求。</p>
@@ -373,7 +371,16 @@ Serviec(服务)简述
 <h4 id="实现生命周期回调"><a href="#实现生命周期回调" class="headerlink" title="实现生命周期回调"></a>实现生命周期回调</h4><p>与 Activity 类似，服务也拥有生命周期回调方法，你可以实现这些方法来监控服务状态的变化，并适时执行工作。下面的例子展示了每种生命周期方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> mStartMode;       <span class="comment">// 指示如果服务被杀死，该如何操作</span></div><div class="line">    IBinder mBinder;      <span class="comment">// 客户端绑定接口</span></div><div class="line">    <span class="keyword">boolean</span> mAllowRebind; <span class="comment">// 指示是否应使用onRebind</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//服务正在创建中</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onStartCommand</span><span class="params">(Intent intent, <span class="keyword">int</span> flags, <span class="keyword">int</span> startId)</span> </span>&#123;</div><div class="line">        <span class="comment">//调用了startService()，服务正在启动</span></div><div class="line">        <span class="keyword">return</span> mStartMode;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="comment">//客户端绑定到具有bindService()的服务</span></div><div class="line">        <span class="keyword">return</span> mBinder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onUnbind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="comment">//所有客户端都使用unbindService()取消绑定</span></div><div class="line">        <span class="keyword">return</span> mAllowRebind;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRebind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="comment">//客户端绑定到具有bindService()的服务，</span></div><div class="line">        <span class="comment">//onUnbind()已经被调用</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//该服务已不再使用并被销毁</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注：与 Activity 生命周期回调方法不同，你不需要调用这些方法的超类实现。<br><img src="http://www.passershowe.com/img/service_lifecycle.png" alt="Service生命周期图"></p>
-<p>左图显示了使用 startService() 所创建的服务的生命周期，右图显示了使用 bindService() 所创建的服务的生命周期</p>
+<p>左图显示了使用 startService() 所创建的服务的生命周期，右图显示了使用 bindService() 所创建的服务的生命周期。</p>
+<p>通过实现这些方法，你可以监控这两种服务生命周期：</p>
+<ul>
+<li><p>服务的整个生命周期从调用 onCreate() 开始，到 onDestroy() 返回时结束。与 Activity 类似，服务也在 onCreate() 中完成初始设置，在 onDestroy() 中释放所有剩余资源。例如音乐播放服务可以在 onCreate() 中创建用于播放音乐的线程，然后可以在 onDestroy() 中停止该线程。无论服务是通过 startService() 还是 bindService() 创建，都会为所有服务调用 onCreate() 和 onDestroy() 方法。</p>
+</li>
+<li><p>服务的有效生命周期从调用 onStartCommand() 或 onBind() 方法开始。每种方法均有 Intent 对象，该对象分别传递到 startService() 或 bindService() 。<br>对于启动服务，有效生命周期与整个生命周期同时结束(即便是在 onStartCommand() 返回之后，服务仍然处于活动状态)。对于绑定服务，有效生命周期在 onUnbind() 返回时结束。</p>
+</li>
+</ul>
+<p>注：尽管启动服务是通过 stopSelf() 或 stopService() 来停止，但是该服务并无相应的回调(没有 onStop 回调)。因此，除非服务绑定到客户端，否则在服务停止时，系统会将其销毁而 onDestroy() 是接收到的唯一回调。</p>
+<p>尽管该图分开介绍通过 startService() 创建的服务和通过 bindService() 创建的服务，但是记住一点，不管启动方式如何，任何服务均有可能允许客户端与其绑定。因此，最初使用 onStartCommand()（通过客户端调用 startService()）启动的服务仍可接收对 onBind() 的调用（当客户端调用 bindService() 时）。</p>
 
       
       
@@ -431,7 +438,7 @@ Serviec(服务)简述
         <p><span>本文标题:</span><a href="/2017/04/11/Android-Service/">浅谈 Android Service</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月11日 - 13时08分</p>
-        <p><span>最后更新:</span>2017年04月13日 - 23时29分</p>
+        <p><span>最后更新:</span>2017年04月13日 - 23时51分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/11/Android-Service/" title="浅谈 Android Service">http://www.passershowe.com/2017/04/11/Android-Service/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/11/Android-Service/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
