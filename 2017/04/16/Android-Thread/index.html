@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="PassersHowe">
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
  当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
-<meta property="og:updated_time" content="2017-04-17T06:07:26.824Z">
+<meta property="og:updated_time" content="2017-04-17T06:39:16.342Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android 的进程和线程">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
@@ -255,13 +255,8 @@
 <ol>
 <li><p>前台进程</p>
 <p>用户当前操作所必需的进程。如果一个进程满足以下任意一个条件，即视为前台进程：</p>
-<ul>
-<li>托管于用户正在交互的 Activity (已调用 Activity 的 onResume() 方法)</li>
-<li>托管于某个 Service，后者绑定到用户正在交互的 Activity</li>
-<li>托管于正在前台运行的 Service (服务已调用 startForeground())</li>
-<li>托管于正在执行一个生命周期回调的 Service (onCreate()、onStart() 或 onDestroy())</li>
-<li>托管于正在执行 onReceive() 方法的 BroadcastReceiver<br>通常在任意给定时间前台进程都为数不多。只有在内存不足以支持它们同时继续运行，不得已的情况下，系统才会终止它们。此时，，设备往往已达到内存分页状态，需要终止一些前台进程来确保用户界面正常响应。</li>
-</ul>
+<p>(1)托管于用户正在交互的 Activity (已调用 Activity 的 onResume() 方法)<br>(2)托管于某个 Service，后者绑定到用户正在交互的 Activity<br>(3)托管于正在前台运行的 Service (服务已调用 startForeground())<br>(4)托管于正在执行一个生命周期回调的 Service (onCreate()、onStart() 或 onDestroy())<br>(5)托管于正在执行 onReceive() 方法的 BroadcastReceiver</p>
+<p>通常在任意给定时间前台进程都为数不多。只有在内存不足以支持它们同时继续运行，不得已的情况下，系统才会终止它们。此时，，设备往往已达到内存分页状态，需要终止一些前台进程来确保用户界面正常响应。</p>
 </li>
 <li><p>可见进程</p>
 <p>没有任何前台组件、但会影响用户在屏幕上所见内容的进程。如果一个进程满足以下任一条件，即视为可见进程：</p>
@@ -366,7 +361,7 @@
         <p><span>本文标题:</span><a href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月16日 - 14时01分</p>
-        <p><span>最后更新:</span>2017年04月17日 - 14时07分</p>
+        <p><span>最后更新:</span>2017年04月17日 - 14时39分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/16/Android-Thread/" title="了解 Android 的进程和线程">http://www.passershowe.com/2017/04/16/Android-Thread/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/16/Android-Thread/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
