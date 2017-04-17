@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="PassersHowe">
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
  当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
-<meta property="og:updated_time" content="2017-04-17T06:39:16.342Z">
+<meta property="og:updated_time" content="2017-04-17T16:00:17.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android 的进程和线程">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
@@ -255,7 +255,13 @@
 <ol>
 <li><p>前台进程</p>
 <p>用户当前操作所必需的进程。如果一个进程满足以下任意一个条件，即视为前台进程：</p>
-<p>(1)托管于用户正在交互的 Activity (已调用 Activity 的 onResume() 方法)<br>(2)托管于某个 Service，后者绑定到用户正在交互的 Activity<br>(3)托管于正在前台运行的 Service (服务已调用 startForeground())<br>(4)托管于正在执行一个生命周期回调的 Service (onCreate()、onStart() 或 onDestroy())<br>(5)托管于正在执行 onReceive() 方法的 BroadcastReceiver</p>
+<ul>
+<li>托管于用户正在交互的 Activity (已调用 Activity 的 onResume() 方法)</li>
+<li>托管于某个 Service，后者绑定到用户正在交互的 Activity</li>
+<li>托管于正在前台运行的 Service (服务已调用 startForeground())</li>
+<li>托管于正在执行一个生命周期回调的 Service (onCreate()、onStart() 或 onDestroy())</li>
+<li>托管于正在执行 onReceive() 方法的 BroadcastReceiver</li>
+</ul>
 <p>通常在任意给定时间前台进程都为数不多。只有在内存不足以支持它们同时继续运行，不得已的情况下，系统才会终止它们。此时，，设备往往已达到内存分页状态，需要终止一些前台进程来确保用户界面正常响应。</p>
 </li>
 <li><p>可见进程</p>
@@ -304,6 +310,26 @@
 <h5 id="使用-AsyncTask"><a href="#使用-AsyncTask" class="headerlink" title="使用 AsyncTask"></a>使用 AsyncTask</h5><p>AsyncTask允许用户对用户界面执行异步操作。他会先阻塞工作线程中的操作，然后在 UI 线程中发布结果，而你无需亲自处理线程和处理程序。</p>
 <p>要使用它，必须创建 AsyncTask 的子类，并实现 odInBrackground() 回调方法,该方法将在后台线程池中运行，需要更新 UI 则要实现 onPostExecute()，传递 odInBrackground() 返回的结果并在 UI 线程中运行，使之更安全地更新 UI，可以通过从 UI 线程中调用 execute() 来运行任务。</p>
 <p>例如，下面使用 AsyncTask 来实现上述的示例：</p>
+<p>Activity 里调用 execute() 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">                <span class="keyword">new</span> DownloadImageTask(showImage).execute(url);</div><div class="line">            &#125;</div></pre></td></tr></table></figure>
+<p>继承 AsyncTask 实现异步加载</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DownloadImageTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">String</span>, <span class="title">Void</span>, <span class="title">Bitmap</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> ImageView mImageView;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DownloadImageTask</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DownloadImageTask</span><span class="params">(ImageView imageView)</span> </span>&#123;</div><div class="line">        mImageView = imageView;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span><span class="params">(String... params)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> DownImageUtil.getInstance().loadImageFromNetwork(params[<span class="number">0</span>]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mImageView != <span class="keyword">null</span>) &#123;</div><div class="line">            mImageView.setImageBitmap(bitmap);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在 UI 是安全的，代码也得到简化,任务分解成了两部分：一部分在工作线程内完成，另一部分在 UI 线程内完成。</p>
+<p>下面简单的介绍 AsyncTask 的工作方法：</p>
+<ul>
+<li>可以使用泛型指定参数类型、进度值和任务最终值</li>
+<li>方法 doInBackground() 会在工作线程上自动执行</li>
+<li>onPreExecute() 、onPostExecute() 和 onProgressUpdate() 均在 UI 线程中调用</li>
+<li>doInBackground() 返回值将发送到 onPostExecute()</li>
+<li>可以随时在 doInBackground() 中调用 publishProgress() ，以在 UI 线程中执行 onProgressUpdate()</li>
+<li>可以随时取消任何线程中的任务</li>
+</ul>
+<p>注意：使用工作线程时有可能遇到另一个问题，即：运行时配置变更(例如，用户更改了屏幕方向)，导致 Activity 意外重启，这可能会销毁工作线程。</p>
+<h4 id="线程安全方法"><a href="#线程安全方法" class="headerlink" title="线程安全方法"></a>线程安全方法</h4><p>在某些情况下，你实现的方法可能会从多个线程调用，因此在编写这些方法时必须确保其满足线程安全的要求。</p>
+<p>这一点主要适用于可以远程调用的方法，如绑定服务中的方法。如果对 IBinder 中所实现方法的调用源自运行 IBinder 的同一进程，则该方法在调用方的线程中执行。但是，如果调用源自其他进程，则该方法将从线程池中选择某个线程中执行(而不是在进程的 UI 线程中执行)，线程池由系统与 IBinder 相同的进程中维护。例如，服务的 onBind() 方法从服务的 UI 线程中调用，在 onBind() 返回的对象中实现的方法仍会从线程池中的线程调用。由于一个服务可以有多个客户端，因此可能会有多个线程池同一时间使用同一个 IBinder 方法。所以 IBinder 方法实现必须为线程安全方法。</p>
+<p>同样，内容提供程序也可以接受来自其他进程的数据请求。尽管 ContentResolver 和 ContentProvider 类隐藏了如何管理进程间通信的细节，但响应这些请求的 ContentProvider 方法(query()、insert()、delete()、update() 和 getType() 方法)将从内容提供程序所在进程的线程池中调用，而不是从进程的 UI 线程调用。由于这些方法同时从任意数量的线程调用，因此它们必须实现为线程安全方法。</p>
+<h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h3><p>Android 利用远程过程调用(RPC)提供了一种进程间通信(IPC)机制，通过这种机制，由 Activity 或其他应用组件调用方法将(在其他进程中)远程执行，而所有结果将返回给调用方。这要求把方法调用及其数据分解至操作系统可以识别的程度，并将其从本地进程和地址空间传输至远程进程和地址空间，然后在远程进程中重新组装并执行该调用。然后返回值将沿相反方向传输回来。Android 提供了执行这些 IPC 事务所需的全部代码，因此只需要集中精力定义和实现 RPC 编程接口即可。</p>
+<p>需要执行 IPC，必须使用 bindService() 将应用绑定到服务上,想了解详细的信息,可以参考<br><a href="http://www.passershowe.com/2017/04/11/Android-Service/">浅谈 Android Service</a>。</p>
 </the>
       
       
@@ -361,7 +387,7 @@
         <p><span>本文标题:</span><a href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月16日 - 14时01分</p>
-        <p><span>最后更新:</span>2017年04月17日 - 14时39分</p>
+        <p><span>最后更新:</span>2017年04月18日 - 00时00分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/16/Android-Thread/" title="了解 Android 的进程和线程">http://www.passershowe.com/2017/04/16/Android-Thread/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/16/Android-Thread/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -390,7 +416,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程"><span class="toc-number">1.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程的生命周期"><span class="toc-number">1.1.</span> <span class="toc-text">进程的生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-number">2.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-AsyncTask"><span class="toc-number">2.0.1.</span> <span class="toc-text">使用 AsyncTask</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程"><span class="toc-number">1.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进程的生命周期"><span class="toc-number">1.1.</span> <span class="toc-text">进程的生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程"><span class="toc-number">2.</span> <span class="toc-text">线程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-AsyncTask"><span class="toc-number">2.0.1.</span> <span class="toc-text">使用 AsyncTask</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程安全方法"><span class="toc-number">2.1.</span> <span class="toc-text">线程安全方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程间通信"><span class="toc-number">3.</span> <span class="toc-text">进程间通信</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
