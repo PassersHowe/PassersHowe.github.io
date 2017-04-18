@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="PassersHowe">
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
  当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
-<meta property="og:updated_time" content="2017-04-17T16:00:17.029Z">
+<meta property="og:updated_time" content="2017-04-18T02:45:16.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android 的进程和线程">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
@@ -246,8 +246,8 @@
 <the rest="" of="" contents="" |="" 余下全文="">
 
 <h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>默认情况下，同一应用的所有组件均在相同的进程中运行，且大多数的应该都是如此。但是，如果需要控制某个组件所属的进程，则可以在清单文件中执行此操作。</p>
-<p>各类组件元素的清单文件条目 <activity> 、<service> 、<receiver> 和 <provider> 均支持 android:process 属性，该属性可以指定组件应该运行在哪个进程。可以设置此属性，使每个组件在各自的进程中运行，或者使一些组件共享一个进程，而其他组件则不共享。此外，还可以设置 android:process ，应用共享具有相同的 Linux 用户 ID 和相同的证书签署，使不同应用的组件在相同的进程中运行。</provider></receiver></service></activity></p>
-<p>此外，<application> 元素还支持 android:process 属性，可以设置适用于所有组件的默认值。</application></p>
+<p>各类组件元素的清单文件条目 <code>&lt;activity&gt;</code>  、<code>&lt;service&gt;</code> 、<code>&lt;receiver&gt;</code> 和 <code>&lt;provider&gt;</code> 均支持 <code>android:process</code> 属性，该属性可以指定组件应该运行在哪个进程。可以设置此属性，使每个组件在各自的进程中运行，或者使一些组件共享一个进程，而其他组件则不共享。此外，还可以设置 android:process ，应用共享具有相同的 Linux 用户 ID 和相同的证书签署，使不同应用的组件在相同的进程中运行。</p>
+<p>此外，<code>&lt;application&gt;</code> 元素还支持 <code>android:process</code> 属性，可以设置适用于所有组件的默认值。</p>
 <p>如果内存不足，而其他为用户提供更紧急服务的进程又需要内存时，Android 可能会决定在某一时刻关闭某一进程。在被终止进程中运行的应用组件也会随之销毁。当这些组件需要再次运行时，系统将为它们重启进程。</p>
 <p>决定终止哪个进程时，Android 系统将权衡它们对用户的相对重要程度。例如，相对于托管可见 Activity 的进程而言，它更有可能关闭托管屏幕上不再可见的 Activity 进程。因此，是否终止某个进程取决于该进程所运行组件的状态。</p>
 <h4 id="进程的生命周期"><a href="#进程的生命周期" class="headerlink" title="进程的生命周期"></a>进程的生命周期</h4><p>Android 系统将尽量长时间的保持应用进程，但为了新建进程或者运行更重要的进程，最终需要移除旧的进程来回收内存。为了确定保留或终止哪些进程，系统会根据正在运行的组件及这些组件的状态，将每个进程按重要性层次结构进行划分，必要时，系统会首先清除重要性最低的进程，然后是重要性略逊的进程，以此类推，来回收系统资源。</p>
@@ -387,7 +387,7 @@
         <p><span>本文标题:</span><a href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月16日 - 14时01分</p>
-        <p><span>最后更新:</span>2017年04月18日 - 00时00分</p>
+        <p><span>最后更新:</span>2017年04月18日 - 10时45分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/16/Android-Thread/" title="了解 Android 的进程和线程">http://www.passershowe.com/2017/04/16/Android-Thread/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/16/Android-Thread/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
