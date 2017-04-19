@@ -6,18 +6,18 @@
   <title>了解 Android 的进程和线程 | PassersHowe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
- 当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
+当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组">
 <meta property="og:type" content="article">
 <meta property="og:title" content="了解 Android 的进程和线程">
 <meta property="og:url" content="http://www.passershowe.com/2017/04/16/Android-Thread/index.html">
 <meta property="og:site_name" content="PassersHowe">
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
- 当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
-<meta property="og:updated_time" content="2017-04-18T02:45:16.812Z">
+当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组">
+<meta property="og:updated_time" content="2017-04-19T06:55:49.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android 的进程和线程">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
- 当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其">
+当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组">
   
     <link rel="alternative" href="/atom.xml" title="PassersHowe" type="application/atom+xml">
   
@@ -213,8 +213,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p> 前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo" target="_blank" rel="external">demo链接</a></p>
-<p> 当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组件在单独的进程中运行，并为任何进程创建额外的线程。</p>
+        <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo" target="_blank" rel="external">demo链接</a></p>
+<p>当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组件在单独的进程中运行，并为任何进程创建额外的线程。</p>
   <a id="more"></a>
 <the rest="" of="" contents="" |="" 余下全文="">
 
@@ -360,7 +360,7 @@
         <p><span>本文标题:</span><a href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月16日 - 14时01分</p>
-        <p><span>最后更新:</span>2017年04月18日 - 10时45分</p>
+        <p><span>最后更新:</span>2017年04月19日 - 14时55分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/16/Android-Thread/" title="了解 Android 的进程和线程">http://www.passershowe.com/2017/04/16/Android-Thread/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/16/Android-Thread/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -375,6 +375,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2017/04/19/Android-ANR/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          了解 Android ANR
+        
+      </div>
+    </a>
   
   
     <a href="/2017/04/11/Android-Service/" id="article-nav-older" class="article-nav-link-wrap">
@@ -440,7 +449,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/04/19/Android-ANR/" title="上一篇: 了解 Android ANR">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -449,7 +460,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android-Service/">浅谈 Android Service</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Android-BroadcastReceiver/">浅谈Android Broadcast</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Android-Activity/">浅谈Android Activity的生命周期</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/19/Android-ANR/">了解 Android ANR</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/Android-Thread/">了解 Android 的进程和线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android-Service/">浅谈 Android Service</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/05/Android-BroadcastReceiver/">浅谈Android Broadcast</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/26/Android-Activity/">浅谈Android Activity的生命周期</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

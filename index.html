@@ -173,6 +173,71 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-Android-ANR" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/19/Android-ANR/" class="article-date">
+      <time datetime="2017-04-19T06:49:34.000Z" itemprop="datePublished">2017-04-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/19/Android-ANR/">了解 Android ANR</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo">demo链接</a></p>
+<p>可以编写在世界各地获得性能测试的代码，但仍然觉得缓慢，挂起或冻结很长时间，或者花费太长的时间来处理输入。应用程序响应速度最糟糕的是“应用程序无响应”（ANR）对话框。</p>
+<p>在Android中，系统会通过显示一个对话框来防止在一段时间内响应不足的应用程序，该对话框显示您的应用程序已停止响应，例如图1中的对话框。<br>在这一点上，您的应用程序在相当长的一段时间内没有反应，因此系统为用户提供退出应用程序的选项。设计应用程序的响应性至关重要，因此系统不会向用户显示ANR对话框。<br>
+          
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/04/19/Android-ANR/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Android-Thread" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -200,8 +265,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p> 前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo">demo链接</a></p>
-<p> 当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组件在单独的进程中运行，并为任何进程创建额外的线程。</p>
+              <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo">demo链接</a></p>
+<p>当某个应用组件启动且未运行其他组件时， Android 系统会使用单个执行线程为应用启动新的 Linux 进程。默认情况下，同一应用的所有组件在相同的进程和线程(主线程)中运行。如果某个应用组件启动且应用已存在进程(存在其他组件)，则该组件会在此进程内启动并使用相同的执行线程，但是你可以安排应用的其他组件在单独的进程中运行，并为任何进程创建额外的线程。</p>
           
       
       
