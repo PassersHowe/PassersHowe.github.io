@@ -15,7 +15,7 @@
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
 合理编写在世界各地获得性能测试的代码，但仍然觉得缓慢，挂起或冻结很长时间，或者花费太长的时间来处理输入。应用程序响应速度最糟糕的是“应用程序无响应”（ANR）对话框。
 在Android中，系统会通过显示一个对话框来防止在一段时间内响应不足的应用程序，该对话框显示您的应用程序已停止响应，例如图1中的对话框">
-<meta property="og:updated_time" content="2017-04-20T14:43:45.666Z">
+<meta property="og:updated_time" content="2017-04-20T14:45:53.473Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解 Android ANR">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
@@ -237,10 +237,10 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> DownloadAsyncTask().execute(url);</div></pre></td></tr></table></figure>
 <p>你可能想要创建自己的 Thread 或 HandleThread 类，虽然它比 AsyncTask 更复杂。如果你这样做的话，应该调用<code>Process.setThreadPriority()</code>并传递<code>THREAD_PRIORITY_BACKGROUND</code>来设置线程的优先级为“background”优先级。如果没有以这种方式去设置线程为较低的优先级，那么线程有可能会减慢你的应该程序，因为默认情况下它与 UI 线程的优先级是相同的。</p>
 <p>如果你实现了 Thread 或 HandleThread ，请确保你的 UI 线程在等待工作线程完成后不会被阻塞，请勿调用 <code>Thread.wait()</code> 或 <code>Thread.sleep()</code>。在等待工作线程完成后，主线程不应该阻塞，而需要为其他线程提供一个处理程序，以便在完成后将其返回。以这种方式设计应用程序将允许你的应用程序的 UI 线程保持对输入的响应，从而避免由5秒输入事件超时引起的 ANR 对话框。</p>
-<p>BroadcastReceiver 执行时间的具体约束强调了广播接收者要做的事情：在后台工作量小，如保存设置或注册通知。因此，与 UI 线程中调用其他方法一样，应用程序应避免在广播接收器中潜在的长时间运行的操作或者计算，但是如果需要做耗时操作来响应意向广播，而不是通过<br>工作线程进行密集的任务，则应该启动 IntentService。</p>
+<p>BroadcastReceiver 执行时间的具体约束强调了广播接收者要做的事情：在后台工作量小，如保存设置或注册通知。因此，与 UI 线程中调用其他方法一样，应用程序应避免在广播接收器中潜在的长时间运行的操作或者计算，但是如果需要做耗时操作来响应意向广播，而不是通过工作线程进行密集的任务，则应该启动 IntentService。</p>
 <p>BroadcastReceiver对象的另一个常见问题是当它们执行得太频繁时发生。频繁的后台执行减少了其他应用程序可用的内存量。</p>
 <p>提示：你可以使用 StrictMode 来帮助找到潜在的长时间运行的操作，如网络或数据库操作，您可能会意外地在主线程上执行。</p>
-<h3 id="增强响应"><a href="#增强响应" class="headerlink" title="增强响应"></a>增强响应</h3><p>通常，100到200ms是用户在应用程序中感觉的阈值，超过这个数值，用户会觉得应用程序感知迟钝。 因此，这里有一些额外的技巧，你应该做什么来避免ANR并使应用程序看起来响应用户：</p>
+<h3 id="增强应用响应"><a href="#增强应用响应" class="headerlink" title="增强应用响应"></a>增强应用响应</h3><p>通常，100到200ms是用户在应用程序中感觉的阈值，超过这个数值，用户会觉得应用程序感知迟钝。 因此，这里有一些额外的技巧，你应该做什么来避免ANR并使应用程序看起来响应用户：</p>
 <ul>
 <li>如果你的应用程序在后台执行响应用户输入的工作，则显示正在进行进度（例如在 UI 中使用 ProgressBar）。</li>
 <li>对于游戏来说，具体计算在工作线程中的进度。</li>
@@ -304,7 +304,7 @@
         <p><span>本文标题:</span><a href="/2017/04/19/Android-ANR/">了解 Android ANR</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月19日 - 14时49分</p>
-        <p><span>最后更新:</span>2017年04月20日 - 22时43分</p>
+        <p><span>最后更新:</span>2017年04月20日 - 22时45分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/19/Android-ANR/" title="了解 Android ANR">http://www.passershowe.com/2017/04/19/Android-ANR/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/19/Android-ANR/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -333,7 +333,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#是什么原因引发的ANR？"><span class="toc-number">1.</span> <span class="toc-text">是什么原因引发的ANR？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何避免ANR"><span class="toc-number">2.</span> <span class="toc-text">如何避免ANR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增强响应"><span class="toc-number">3.</span> <span class="toc-text">增强响应</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#是什么原因引发的ANR？"><span class="toc-number">1.</span> <span class="toc-text">是什么原因引发的ANR？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何避免ANR"><span class="toc-number">2.</span> <span class="toc-text">如何避免ANR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增强应用响应"><span class="toc-number">3.</span> <span class="toc-text">增强应用响应</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
