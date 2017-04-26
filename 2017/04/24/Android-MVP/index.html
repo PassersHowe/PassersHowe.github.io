@@ -6,20 +6,23 @@
   <title>谈谈 Android MVP 架构 | PassersHowe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
-MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。">
+MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。
+什么是 MVP 架构MVP 架构由 Model(模型)、View(视图)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈 Android MVP 架构">
 <meta property="og:url" content="http://www.passershowe.com/2017/04/24/Android-MVP/index.html">
 <meta property="og:site_name" content="PassersHowe">
 <meta property="og:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
-MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。">
+MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。
+什么是 MVP 架构MVP 架构由 Model(模型)、View(视图)">
 <meta property="og:image" content="http://www.passershowe.com/img/android_mvp_catalog.png">
 <meta property="og:image" content="http://www.passershowe.com/img/android_mvp_catalog.png">
-<meta property="og:updated_time" content="2017-04-26T07:06:47.380Z">
+<meta property="og:updated_time" content="2017-04-26T07:18:19.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谈谈 Android MVP 架构">
 <meta name="twitter:description" content="前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！demo链接
-MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。">
+MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。
+什么是 MVP 架构MVP 架构由 Model(模型)、View(视图)">
 <meta name="twitter:image" content="http://www.passershowe.com/img/android_mvp_catalog.png">
   
     <link rel="alternative" href="/atom.xml" title="PassersHowe" type="application/atom+xml">
@@ -218,14 +221,15 @@ MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有�
           
         <p>前言：本文所写的是博主的个人见解，如有错误或者不恰当之处，欢迎私信博主，加以改正！<a href="https://github.com/PassersHowe/BlogDemo" target="_blank" rel="external">demo链接</a></p>
 <h3 id="MVP-架构简介"><a href="#MVP-架构简介" class="headerlink" title="MVP 架构简介"></a>MVP 架构简介</h3><p>说起 MVP 架构，相信很多朋友都看过，网上也有很多这方面的资料。博主使用 MVP 架构搭建项目也有一段时间了。简单谈一谈心得。说到 MVP 架构，很多人都拿它跟 MVC 去对比。这里我就不过多重复说了，单刀直入。</p>
-  <a id="more"></a>
-<the rest="" of="" contents="" |="" 余下全文="">
-
 <h4 id="什么是-MVP-架构"><a href="#什么是-MVP-架构" class="headerlink" title="什么是 MVP 架构"></a>什么是 MVP 架构</h4><p>MVP 架构由 Model(模型)、View(视图)、Presenter(主持者)构成，下面我们一起来了解它们：<br> <img src="http://www.passershowe.com/img/android_mvp_catalog.png" alt="MVP 架构图"></p>
 <ul>
 <li>Model 负责业务逻辑以及数据的处理，主要通过接口实现</li>
 <li>View 负责 UI 显示以及与用户之间的交互</li>
-<li>Presenter 起到一个衔接桥梁的作用，负责 Model 跟 View 之间的交互</li>
+<li><p>Presenter 起到一个衔接桥梁的作用，负责 Model 跟 View 之间的交互</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+</the></li>
 </ul>
 <h3 id="MVP-架构的利弊"><a href="#MVP-架构的利弊" class="headerlink" title="MVP 架构的利弊"></a>MVP 架构的利弊</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
 <li><p>耦合度低<br>View 跟 Model 之间由 Presenter 负责两者之间的交互，低了其耦合度，使其更加关注自身逻辑，结构清晰</p>
@@ -254,7 +258,7 @@ MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有�
 <h4 id="View"><a href="#View" class="headerlink" title="View"></a>View</h4><p>Presenter 与 View 是通过接口进行交互，所以这里可以定义一个接口，用于进行交互，此处的难点在于，要清楚需要哪些方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseView</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setPresenter</span><span class="params">(T presenter)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BasePresenter</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></the>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
       
       
         <div class="page-reward">
@@ -311,7 +315,7 @@ MVP 架构简介说起 MVP 架构，相信很多朋友都看过，网上也有�
         <p><span>本文标题:</span><a href="/2017/04/24/Android-MVP/">谈谈 Android MVP 架构</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 洪俊豪(PassersHowe) 的个人博客">洪俊豪(PassersHowe)</a></p>
         <p><span>发布时间:</span>2017年04月24日 - 13时58分</p>
-        <p><span>最后更新:</span>2017年04月26日 - 15时06分</p>
+        <p><span>最后更新:</span>2017年04月26日 - 15时18分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/04/24/Android-MVP/" title="谈谈 Android MVP 架构">http://www.passershowe.com/2017/04/24/Android-MVP/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.passershowe.com/2017/04/24/Android-MVP/　　作者: 洪俊豪(PassersHowe)" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
