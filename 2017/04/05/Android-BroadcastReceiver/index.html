@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          浅谈Android Broadcast - undefined
+          浅谈Android Broadcast - PassersHowe个人博客
         
     </title>
 
@@ -110,7 +110,7 @@
                         <h1>浅谈Android Broadcast</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
-                            Posted by John Doe on
+                            Posted by  on
                             2017-04-05
                         </span>
                     </div>
@@ -369,6 +369,40 @@
 
 
 
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->
@@ -401,7 +435,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; John Doe 2019 
+                    Copyright &copy; null 2019 
                     <br>
                     Powered by <a href="http://www.hexo.io">Hexo</a> 
                     <span style="display: inline-block; margin: 0 5px;">
